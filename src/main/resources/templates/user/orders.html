@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>История заказов пользователя</title>
+</head>
+<body style="text-align: center">
+<h3>История заказов</h3>
+<div th:each="order : ${orders}">
+  <h3 th:text="'Заказ № ' + ${order.getNumber()} + ' от ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')} + ' года.' + ' Статус: ' + ${order.getStatus()} + '.'"></h3>
+  <img th:src="'/img/' + ${order.getProduct().imageList[0].getFileName()}" width="75px">
+  <p th:text="'Название: ' + ${order.getProduct().getTitle()}"></p>
+  <p th:text="'Количество: ' + ${order.getCount()} + ' шт.; ' + '   Цена: ' + ${order.getProduct().getPrice()} + ' руб.'"></p>
+<!--  <p th:text="'Цена: ' + ${order.getProduct().getPrice()}"></p>-->
+<!--  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>-->
+<!--  <p th:text="'Статус: ' + ${order.getStatus()}"></p>-->
+  <hr>
+</div>
+
+</body>
+</html>

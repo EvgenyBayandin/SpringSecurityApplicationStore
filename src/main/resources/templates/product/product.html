@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог товаров</title>
+</head>
+<body style="text-align: center">
+<h3>Каталог товаров торговой площадки Store</h3>
+<form th:method="POST" th:action="@{product/search}">
+    <div>
+        <legend> Поиск и сортировка по: </legend>
+        <br>
+        <label for="search">наименованию:</label>
+        <input name="search" id="search" th:value="*{value_search}">
+        <br>
+        <br>
+        <label for="ot">цене от</label>
+        <input type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+        <label for="do">до</label>
+        <input type="text" name="do" id="do" th:value="*{value_price_do}">
+        <br>
+        <br>
+        <div>
+            <label for="ascending_price">возрастанию </label>
+            <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+            <label for="descending_price">убыванию цены</label>
+            <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+            <br>
+            <p>категории:</p>
+            <label for="phone">смартфоны</label>
+            <input type="radio" id="phone" name="contact" value="phone">
+            <label for="watch">смарт-часы</label>
+            <input type="radio" id="watch" name="contact" value="watch">
+            <label for="pad">планшеты</label>
+            <input type="radio" id="pad" name="contact" value="pad">
+            <br>
+            <br>
+            <input type="submit" value="Найти">
+        </div>
+    </div>
+</form>
+<!--<h3>Результат поиска и сортировки</h3>-->
+<div th:each="product : ${search_product}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="100px">
+    <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+</div>
+<hr>
+<br>
+<br>
+<div th:each="product : ${products}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="150px">
+    <br>
+    <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
+    <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+<!--    <hr>-->
+</div>
+</body>
+</html>

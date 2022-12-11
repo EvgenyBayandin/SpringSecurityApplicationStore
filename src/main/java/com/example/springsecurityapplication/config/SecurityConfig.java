@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 //public class SecurityConfig extends WebSecurityConfiguration {
+
+// вариант с собственной формой аутентификации позволяет открыть доступ к главным страницам сайта без аутентификации
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    private final AuthenticationProvider authenticationProvider;
@@ -33,14 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Конфигурация Spring Security
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception{
-        // указываем на какой url адрес фильтр Spring Security будет отправлять не аутентифицированного  пользователz при заходе на защищенную страницу
+        // указываем на какой url адрес фильтр Spring Security будет отправлять не аутентифицированного  пользователя при заходе на защищенную страницу
         httpSecurity
                 // указываем что все страницы будут защищены процессом аутентификации
                 .authorizeRequests()
                 // указываем что страница /admin доступна пользователю с ролью ADMIN
                 .antMatchers("/admin").hasRole("ADMIN")
                 // Указыаем что данные страницы доступны все пользователям
-                .antMatchers("/authentication/login","/authentication/registration", "/error").permitAll()
+                .antMatchers("/authentication/login","/authentication/registration", "/error", "/product", "/img/**", "/product/info/{id}" ).permitAll()
                 // Указываем что все остальные страницы доступны пользователям с ролью user и admin
                 .anyRequest().hasAnyRole("USER", "ADMIN")
 //                // Указываем что для всех остальных страниц необходимо вызывать метод authenticated(), который открывает форму аутентификации
